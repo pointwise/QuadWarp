@@ -37,13 +37,13 @@ proc rad2deg { r } {
 proc warp { d i j } {
   set T [pw::Grid getGridPointTolerance]
   set ij [list $i $j]
-  set A [$d getPoint $ij]
+  set A [$d getXYZ -grid $ij]
   set ij [list [expr $i + 1] $j]
-  set B [$d getPoint $ij]
+  set B [$d getXYZ -grid $ij]
   set ij [list $i [expr $j + 1] ]
-  set C [$d getPoint $ij]
+  set C [$d getXYZ -grid $ij]
   set ij [list [expr $i + 1] [expr $j + 1] ]
-  set D [$d getPoint $ij]
+  set D [$d getXYZ -grid $ij]
 
   # diagonal CB
   # triangle ABC
