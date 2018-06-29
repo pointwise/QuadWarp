@@ -1,5 +1,5 @@
 #
-# Copyright 2011 (c) Pointwise, Inc.
+# Copyright 2018 (c) Pointwise, Inc.
 # All rights reserved.
 # 
 # This sample script is not supported by Pointwise, Inc.
@@ -112,14 +112,18 @@ if { [llength [pw::Grid getAll -type pw::DomainStructured]] == 0 } {
   exit
 }
 
-# user picks domains
+# Use domains already picked if applicable 
 set mask [pw::Display createSelectionMask -requireDomain Structured]
-if { ![pw::Display selectEntities \
-     -description "Pick domain(s) for quad warp." \
-     -selectionmask $mask result] } {				
-  exit
+puts $mask
+pw::Display getSelectedEntities -selectionmask $mask result
+if { [llength $result(Domains)] < 1 } {
+  puts "Pick domain(s) for quad warp."
+  if { ![pw::Display selectEntities \
+           -description "Pick domain(s) for quad warp." \
+           -selectionmask $mask result] } {
+    exit
+  }
 }
-
 # safety check
 if { [llength $result(Domains)] == 0 } {
    puts "$GLF: Aborting because no domains were picked."
